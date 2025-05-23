@@ -5,103 +5,84 @@ package org.example
 
 fun main() {
     println("=== Etapa 1: Funciones Básicas ===")
-    // TODO: Implementar función calcularPromedio
     val promedio1 = calcularPromedio(7.5, 8.0)
-    println("El promedio es: $promedio1")
+    println("El promedio es: $promedio1")  
 
-    // TODO: Implementar función esAprobado
     val nota = 7.0
     val aprobado = esAprobado(nota)
-    println("¿Está aprobado? $aprobado")
+    println("¿Está aprobado? $aprobado")  
 
     println("\n=== Etapa 2: Funciones con Múltiples Parámetros ===")
-    // TODO: Implementar función calcularPromedioTresNotas
     val promedioTresNotas = calcularPromedioTresNotas(7.0, 8.0, 9.0)
-    println("El promedio de las tres notas es: $promedioTresNotas")
+    println("El promedio de las tres notas es: $promedioTresNotas") 
 
-    // TODO: Implementar función obtenerEstadoAlumno
-    val estado = obtenerEstadoAlumno("Juan", "Pérez", 7.5)
-    println(estado)
+    val estado = obtenerEstadoAlumno("Homero", "Valla", 7.5)
+    println(estado)  
 
     println("\n=== Etapa 3: Funciones con Listas ===")
-    // TODO: Implementar función calcularPromedioCurso
     val notas = listOf(7.0, 8.0, 6.5, 9.0, 7.5)
     val promedioCurso = calcularPromedioCurso(notas)
-    println("El promedio del curso es: $promedioCurso")
+    println("El promedio del curso es: $promedioCurso")  
 
-    // TODO: Implementar función obtenerAlumnosAprobados
-    val nombres = listOf("Ana", "Juan", "María", "Pedro", "Lucía")
+    val nombres = listOf("Piker", "Papita", "Marthi", "VoidGil", "Roth")
     val notasAlumnos = listOf(7.0, 5.0, 8.0, 6.0, 9.0)
     val aprobados = obtenerAlumnosAprobados(nombres, notasAlumnos)
-    println("Alumnos aprobados: $aprobados")
+    println("Alumnos aprobados: $aprobados")  
 
     println("\n=== Etapa 4: Funciones Avanzadas ===")
-    // TODO: Implementar función generarBoletin
-    val materias = listOf("Matemática", "Lengua", "Historia")
+    val materias = listOf("Matemática", "Lengua", "Historia",)
     val notasMaterias = listOf(8.0, 7.5, 9.0)
-    val boletin = generarBoletin("Juan Pérez", materias, notasMaterias)
-    println(boletin)
+    val boletin = generarBoletin("Homero Valla", materias, notasMaterias)
+    println(boletin)  
 
-    // TODO: Implementar funciones de análisis de rendimiento
     println("Estadísticas del curso:")
-    println("Promedio: ${calcularPromedioCurso(notas)}")
-    println("Nota más alta: ${obtenerNotaMasAlta(notas)}")
-    println("Nota más baja: ${obtenerNotaMasBaja(notas)}")
-    println("Cantidad de aprobados: ${contarAprobados(notas)}")
+    println("Promedio: ${calcularPromedioCurso(notas)}")  
+    println("Nota más alta: ${obtenerNotaMasAlta(notas)}")  
+    println("Nota más baja: ${obtenerNotaMasBaja(notas)}")  
+    println("Cantidad de aprobados: ${contarAprobados(notas)}")  
 }
 
-// TODO: Implementar las siguientes funciones:
+// Etapa 1: Funciones básicas
+fun calcularPromedio(nota1: Double, nota2: Double): Double = (nota1 + nota2) / 2
 
-// Etapa 1
-fun calcularPromedio(nota1: Double, nota2: Double): Double {
-    // Implementar aquí
-    return 0.0
-}
+fun esAprobado(nota: Double): Boolean = nota >= 7.0
 
-fun esAprobado(nota: Double): Boolean {
-    // Implementar aquí
-    return false
-}
+// Etapa 2: Funciones con múltiples parámetros
+fun calcularPromedioTresNotas(nota1: Double, nota2: Double, nota3: Double): Double = 
+    (nota1 + nota2 + nota3) / 3
 
-// Etapa 2
-fun calcularPromedioTresNotas(nota1: Double, nota2: Double, nota3: Double): Double {
-    // Implementar aquí
-    return 0.0
-}
+fun obtenerEstadoAlumno(nombre: String, apellido: String, nota: Double): String =
+    "$nombre $apellido está ${if (esAprobado(nota)) "aprobado" else "reprobado"} con nota $nota"
 
-fun obtenerEstadoAlumno(nombre: String, apellido: String, nota: Double): String {
-    // Implementar aquí
-    return ""
-}
+// Etapa 3: Funciones con listas
+fun calcularPromedioCurso(notas: List<Double>): Double = notas.average()
 
-// Etapa 3
-fun calcularPromedioCurso(notas: List<Double>): Double {
-    // Implementar aquí
-    return 0.0
-}
+fun obtenerAlumnosAprobados(nombres: List<String>, notas: List<Double>): List<String> =
+    nombres.zip(notas) { nombre, nota -> nombre to nota }
+           .filter { (_, nota) -> esAprobado(nota) }
+           .map { (nombre, _) -> nombre }
 
-fun obtenerAlumnosAprobados(nombres: List<String>, notas: List<Double>): List<String> {
-    // Implementar aquí
-    return emptyList()
-}
-
-// Etapa 4
+// Etapa 4: Funciones avanzadas
 fun generarBoletin(nombre: String, materias: List<String>, notas: List<Double>): String {
-    // Implementar aquí
-    return ""
+    require(materias.size == notas.size) { "Las listas deben tener el mismo tamaño" }
+    
+    return buildString {
+        appendLine("BOLETÍN DE NOTAS")
+        appendLine("Alumno: $nombre")
+        appendLine("----------------------------")
+        materias.forEachIndexed { index, materia -> 
+            appendLine("$materia: ${notas[index]}")
+        }
+        val promedio = calcularPromedioCurso(notas)
+        appendLine("----------------------------")
+        appendLine("Promedio general: ${"%.2f".format(promedio)}")
+        append("Estado general: ")
+        appendLine(if (esAprobado(promedio)) "APROBADO" else "REPROBADO")
+    }
 }
 
-fun obtenerNotaMasAlta(notas: List<Double>): Double {
-    // Implementar aquí
-    return 0.0
-}
+fun obtenerNotaMasAlta(notas: List<Double>): Double = notas.maxOrNull() ?: 0.0
 
-fun obtenerNotaMasBaja(notas: List<Double>): Double {
-    // Implementar aquí
-    return 0.0
-}
+fun obtenerNotaMasBaja(notas: List<Double>): Double = notas.minOrNull() ?: 0.0
 
-fun contarAprobados(notas: List<Double>): Int {
-    // Implementar aquí
-    return 0
-}
+fun contarAprobados(notas: List<Double>): Int = notas.count { esAprobado(it) }
